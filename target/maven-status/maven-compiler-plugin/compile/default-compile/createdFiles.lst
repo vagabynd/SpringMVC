@@ -1,0 +1,6 @@
+com/evgen/dao/UserDao.class
+com/evgen/App.class
+com/evgen/service/TestBean.class
+com/evgen/config/SpringConfig.class
+com/evgen/controller/UserController.class
+com/evgen/service/UserService.class
