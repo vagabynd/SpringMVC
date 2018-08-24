@@ -13,6 +13,7 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
 @EnableWebMvc
 @ComponentScan(basePackages = "com.evgen.controller")
 public class WebConfig extends WebMvcConfigurerAdapter {
+
     //для отображения
     @Bean
     public ViewResolver getViewResolver() {

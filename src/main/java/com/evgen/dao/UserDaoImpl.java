@@ -3,11 +3,31 @@ package com.evgen.dao;
 import com.evgen.entity.User;
 import com.evgen.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
+
 
 import java.util.List;
 
+@Repository
 public class UserDaoImpl implements UserDao{
+
+
+    @Value("${UserDaoSql.findAll}")
+    String findAllSql;
+
+    @Value("${UserDaoSql.update}")
+    String updateSql;
+
+    @Value("${UserDaoSql.getById}")
+    String getByIdSql;
+
+    @Value("${UserDaoSql.delete}")
+    String deleteSql;
+
+    @Value("${UserDaoSql.save}")
+    String saveSql;
 
     public final JdbcTemplate jdbcTemplate;
 
@@ -19,31 +39,26 @@ public class UserDaoImpl implements UserDao{
 
     @Override
     public void save(User user) {
-        String sql = "INSERT INTO user (name, email, age) VALUES (?, ?, ?)";
-        jdbcTemplate.update(sql, user.getName(), user.getEmail(), user.getAge());
+        jdbcTemplate.update(saveSql, user.getName(), user.getEmail(), user.getAge());
     }
 
     @Override
     public User getById(int id) {
-        String sql = "SELECT * FROM user WHERE id=?";
-        return jdbcTemplate.queryForObject(sql, new UserMapper(), id);
+        return jdbcTemplate.queryForObject(getByIdSql, new UserMapper(), id);
     }
 
     @Override
     public void delete(int id) {
-        String sql = "DELETE FROM user WHERE id=?";
-        jdbcTemplate.update(sql, id);
+        jdbcTemplate.update(deleteSql, id);
     }
 
     @Override
     public void update(User user) {
-        String sql= "UPDATE user SET name=?, email=?, age=? WHERE id=?";
-        jdbcTemplate.update(sql, user.getName(), user.getEmail(), user.getAge(), user.getId());
+        jdbcTemplate.update(updateSql, user.getName(), user.getEmail(), user.getAge(), user.getId());
     }
 
     @Override
     public List<User> findAll() {
-        String sql = "SELECT * FROM user";
-        return jdbcTemplate.query(sql, new UserMapper());
+        return jdbcTemplate.query(findAllSql, new UserMapper());
     }
 }
