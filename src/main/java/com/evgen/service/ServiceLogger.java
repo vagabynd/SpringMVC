@@ -27,9 +27,10 @@ public class ServiceLogger {
             String className = joinPoint.getSignature().getDeclaringTypeName();
             String methodName = joinPoint.getSignature().getName();
             Object methodArgs = joinPoint.getArgs();
-            LOGGER.info("From Class " + className + " Call method " + methodName + " with args " + methodArgs);
+            Thread curThread = Thread.currentThread();
+            LOGGER.info("From Class " + className + " method " + methodName + " was called on thread " + curThread.getName() + " with args " + methodArgs);
             Object result =  joinPoint.proceed();
-            LOGGER.info("Method " + methodName + " returns " + result);
+            LOGGER.info("Method " + methodName + " returned value = " + result + " on thread " + curThread.getName());
 
             return result;
     }
@@ -40,9 +41,10 @@ public class ServiceLogger {
         String className = joinPoint.getSignature().getDeclaringTypeName();
         String methodName = joinPoint.getSignature().getName();
         Object methodArgs = joinPoint.getArgs();
-        LOGGER.info("From Class " + className + " Call method " + methodName + " with args " + methodArgs);
+        Thread curThread = Thread.currentThread();
+        LOGGER.info("From Class " + className + " method " + methodName + " was called on thread " + curThread.getName() + " with args " + methodArgs);
         Object result =  joinPoint.proceed();
-        LOGGER.info("Method " + methodName + " returns " + result);
+        LOGGER.info("Method " + methodName + " returned value = " + result + " on thread " + curThread.getName());
 
         return result;
     }
