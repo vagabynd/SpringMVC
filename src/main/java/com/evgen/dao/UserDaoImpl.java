@@ -29,13 +29,12 @@ public class UserDaoImpl implements UserDao{
     @Value("${UserDaoSql.save}")
     String saveSql;
 
-    public final JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
 
     @Autowired
     public UserDaoImpl(JdbcTemplate jdbcTemplate){
         this.jdbcTemplate = jdbcTemplate;
     }
-
 
     @Override
     public void save(User user) {
@@ -61,4 +60,5 @@ public class UserDaoImpl implements UserDao{
     public List<User> findAll() {
         return jdbcTemplate.query(findAllSql, new UserMapper());
     }
+
 }

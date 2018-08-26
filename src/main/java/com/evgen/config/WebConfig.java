@@ -1,8 +1,8 @@
 package com.evgen.config;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
+import org.apache.commons.logging.impl.Log4JLogger;
+import org.apache.logging.log4j.core.impl.Log4jContextFactory;
+import org.springframework.context.annotation.*;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -11,7 +11,8 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = "com.evgen.controller")
+@Import({SpringConfig.class, AopConfig.class})
+@ComponentScan(basePackages = "com.evgen")
 public class WebConfig extends WebMvcConfigurerAdapter {
 
     //для отображения
@@ -21,14 +22,17 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         freeMarkerViewResolver.setOrder(1);
         freeMarkerViewResolver.setSuffix(".ftl");
         freeMarkerViewResolver.setPrefix("");
+
         return freeMarkerViewResolver;
     }
 
     @Bean
-    public FreeMarkerConfigurer getFreeMarkerConfigurer(){
+    public FreeMarkerConfigurer getFreeMarkerConfigurer() {
         FreeMarkerConfigurer freeMarkerConfigurer = new FreeMarkerConfigurer();
-        freeMarkerConfigurer.setTemplateLoaderPaths("/","/WEB-INF/views/");
+        freeMarkerConfigurer.setTemplateLoaderPaths("/", "/WEB-INF/views/");
+
         return freeMarkerConfigurer;
     }
+
 
 }

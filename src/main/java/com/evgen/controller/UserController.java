@@ -4,18 +4,22 @@ package com.evgen.controller;
 import com.evgen.entity.User;
 import com.evgen.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/")
 public class UserController {
 
-    @Autowired
-    public UserService userService;
+    private UserService userService;
 
-    @GetMapping("/")
+    @Autowired
+    public UserController(UserService service) {
+        this.userService = service;
+    }
+
+    @GetMapping
     public String index(){
         return "index";
     }
