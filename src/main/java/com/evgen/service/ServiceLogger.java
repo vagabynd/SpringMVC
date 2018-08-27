@@ -26,7 +26,7 @@ public class ServiceLogger {
             System.out.println("Not annotation");
             String className = joinPoint.getSignature().getDeclaringTypeName();
             String methodName = joinPoint.getSignature().getName();
-            Object methodArgs = joinPoint.getArgs();
+            Object[] methodArgs = joinPoint.getArgs();
             Thread curThread = Thread.currentThread();
             LOGGER.info("From Class " + className + " method " + methodName + " was called on thread " + curThread.getName() + " with args " + methodArgs);
             Object result =  joinPoint.proceed();
@@ -40,7 +40,7 @@ public class ServiceLogger {
         System.out.println("Annotation");
         String className = joinPoint.getSignature().getDeclaringTypeName();
         String methodName = joinPoint.getSignature().getName();
-        Object methodArgs = joinPoint.getArgs();
+        Object[] methodArgs = joinPoint.getArgs();
         Thread curThread = Thread.currentThread();
         LOGGER.info("From Class " + className + " method " + methodName + " was called on thread " + curThread.getName() + " with args " + methodArgs);
         Object result =  joinPoint.proceed();
