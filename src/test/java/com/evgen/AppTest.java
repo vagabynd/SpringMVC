@@ -1,11 +1,13 @@
 package com.evgen;
 import com.evgen.entity.User;
 import com.evgen.service.UserService;
+import com.evgen.service.UserServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -19,12 +21,13 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = {SpringTestConfig.class})
+@ContextConfiguration(classes = SpringTestConfig.class)
 @Transactional
 public class AppTest {
 
     private static final Logger LOGGER = LogManager.getLogger(AppTest.class.getName());
 
+    @Qualifier("getUserService")
     @Autowired
     private UserService service;
 

@@ -4,7 +4,7 @@ package com.evgen.controller;
 import com.evgen.entity.User;
 import com.evgen.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +15,7 @@ public class UserController {
     private UserService userService;
 
     @Autowired
-    public UserController(UserService service) {
+    public UserController(@Qualifier("userServiceImpl") UserService service) {
         this.userService = service;
     }
 

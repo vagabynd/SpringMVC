@@ -1,5 +1,9 @@
 package com.evgen;
 
+import com.evgen.dao.UserDao;
+import com.evgen.dao.UserDaoImpl;
+import com.evgen.service.UserService;
+import com.evgen.service.UserServiceImpl;
 import org.springframework.context.annotation.*;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
@@ -12,7 +16,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.sql.DataSource;
 
 @Configuration
-@ComponentScan(basePackages = "com.evgen")
 @PropertySource("classpath:com/evgen/dao/resources/sql.properties")
 @EnableAspectJAutoProxy
 @EnableTransactionManagement
@@ -22,14 +25,11 @@ public class SpringTestConfig {
 
     @Bean
     public JdbcTemplate getJdbcTemplate() {
-
-        JdbcTemplate jdbcTemplate = new JdbcTemplate(getDataSource());
-        return jdbcTemplate;
+        return new JdbcTemplate(getDataSourceTest());
     }
 
-
     @Bean
-    public DataSource getDataSource() {
+    public DataSource getDataSourceTest() {
 
         EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
         EmbeddedDatabase db = builder
@@ -44,6 +44,19 @@ public class SpringTestConfig {
     @Bean
     public PlatformTransactionManager txManager() {
 
-        return new DataSourceTransactionManager(getDataSource());
+        return new DataSourceTransactionManager(getDataSourceTest());
+    }
+
+    @Bean
+    public UserDao getUserDao(){
+        UserDao userDao = new UserDaoImpl(getJdbcTemplate());
+        return userDao;
+    }
+
+    @Bean
+    public UserService getUserService(){
+        UserService userService = new UserServiceImpl();
+        ((UserServiceImpl) userService).userDao = getUserDao();
+        return userService;
     }
 }
